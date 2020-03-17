@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Header } from "./views/_components/Header";
+import "primereact/resources/themes/nova-light/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import { About } from "./views/About";
+import { HomePage } from "./views/HomePage/HomePage";
+import { BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
-function App() {
+import { PageNotFound } from "./views/PageNotFound";
+import { Characters } from "./views/Characters";
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="container-fluid">
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/about" component={About} />
+          <Route path="/Characters" component={Characters} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
-
-export default App;
