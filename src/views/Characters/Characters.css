@@ -1,0 +1,10 @@
+.Cards {
+  display: inline-block;
+  border-radius: 5px;
+  margin-top: 6rem;
+  margin-bottom: 4rem;
+  margin-left: 5rem;
+}
+.back {
+  background-color: beige;
+}
