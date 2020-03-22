@@ -20,11 +20,6 @@ export const Characters = () => {
     response();
   }, []);
 
-  function data(responsive) {
-    return console.log("responsive", responsive);
-  }
-  data();
-
   const Cartas = () => {
     return data.map((PJ, index) => {
       return (
