@@ -46,7 +46,7 @@ import { useOverShadowStyles } from "@mui-treasury/styles/shadow/over";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 343,
+    maxWidth: 350,
     height: 570,
     margin: "auto",
     borderRadius: 12,
@@ -62,6 +62,7 @@ export const Cards = props => {
   const mediaStyles = useFourThreeCardMediaStyles();
   const textCardContentStyles = useN04TextInfoContentStyles();
   const shadowStyles = useOverShadowStyles({ inactive: false });
+
   return (
     <>
       <Card className={cx(styles.root, shadowStyles.root)}>
@@ -74,7 +75,7 @@ export const Cards = props => {
             classes={textCardContentStyles}
             overline={props.origin ? props.origin : "ERROR"}
             heading={props.name}
-            body={`the name of this Character is ${props.name},${props.gender} and comes from ${props.origin}. His last location is ${props.location}`}
+            body={`the name of this Character is ${props.name}, and comes from ${props.origin}. His last location is ${props.location}. Status:${props.status}`}
           />
         </CardContent>
       </Card>

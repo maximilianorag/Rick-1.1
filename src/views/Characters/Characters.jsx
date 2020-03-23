@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { DataTable } from "./_components/DataTable";
 import "./Characters.css";
 import { Cards } from "./_components/Cards";
-
+import { CharactersData } from "../../core/ApiConsumer/CharactersData/";
 export const Characters = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const response = async () => {
-      try {
-        const responsive = await axios(
-          " https://rickandmortyapi.com/api/character/?page=19"
-        );
+  // console.log("CharactersData", CharactersData());
+  const [Page, setPage] = useState(1);
 
-        setData(responsive.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    response();
-  }, []);
+  const dataFetch = CharactersData(Page);
 
   const Cartas = () => {
-    return data.map((PJ, index) => {
+    return dataFetch.map((PJ, index) => {
       return (
         <div className="Cards" key={index}>
           <Cards
             name={PJ.name}
-            origin={PJ.origin.name}
+            origin={PJ.origin}
             image={PJ.image}
-            gender={PJ.gender}
-            location={PJ.location.name}
+            status={PJ.status}
+            location={PJ.location}
           />
         </div>
       );
@@ -38,8 +27,8 @@ export const Characters = () => {
 
   return (
     <div className="back">
-      {" "}
-      <Cartas />{" "}
+      <Cartas />
+      <DataTable />
     </div>
   );
 };
