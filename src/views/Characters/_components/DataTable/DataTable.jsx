@@ -8,7 +8,56 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { RealFooter } from "./Paginator";
+import { TablePaginationActions } from "./Paginator";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
+const DataParse = () => {
+  debugger;
+  const dataFetch = CharactersData();
+
+  function createData(name, id, IMG, status, location) {
+    return { name, id, IMG, status, location };
+  }
+
+  const columns = dataFetch
+    .map(d => createData(d.name, d.id, d.image, d.status, d.location))
+    .sort((a, b) => (a.id < b.id ? -1 : 1));
+  return columns;
+};
+function RealFooter(props) {
+  const {
+    page,
+    rowsPerPage,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    tamaño
+  } = props;
+
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="custom pagination table">
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              colSpan={3}
+              count={tamaño}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: { "aria-label": "rows per page" },
+                native: true
+              }}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
+  );
+}
 
 const useStyles = makeStyles({
   table: {
@@ -16,27 +65,32 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name, id, IMG, status, location) {
-  return { name, id, IMG, status, location };
-}
-
 export function DataTable() {
-  const dataFetch = CharactersData();
-  console.log("dataFetch", dataFetch);
-  // const rowi = dataFetch.map(PJ =>
-  //   createData(PJ.name, PJ.origin, PJ.status, PJ.location)
-  // );
-  // console.log("rowi", rowi);
+  const columns = DataParse();
+  const tamaño = columns.length;
+  console.log("tamaño", tamaño);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, columns.length - page * rowsPerPage);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const classes = useStyles();
 
-  const columns = dataFetch
-    .map(d => createData(d.name, d.id, d.image, d.status, d.location))
-    .sort((a, b) => (a.id < b.id ? -1 : 1));
   console.log("columns", columns);
   const imgStyle = {
     width: "100px",
     height: "100px"
   };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -57,7 +111,13 @@ export function DataTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {columns.map(row => (
+            {(rowsPerPage > 0
+              ? columns.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : columns
+            ).map(row => (
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">
                   {row.name}
@@ -76,10 +136,21 @@ export function DataTable() {
                 <TableCell align="right">{row.location}</TableCell>
               </TableRow>
             ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <RealFooter />
+      <RealFooter
+        tamaño={tamaño}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        handleChangeRowsPerPage={handleChangeRowsPerPage}
+        handleChangePage={handleChangePage}
+      />
     </>
   );
 }
