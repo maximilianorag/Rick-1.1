@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -103,7 +103,7 @@ const useStyles2 = makeStyles({
   }
 });
 
-export default function Table2() {
+export function RealFooter() {
   const datos = CharactersData();
 
   const columns = datos

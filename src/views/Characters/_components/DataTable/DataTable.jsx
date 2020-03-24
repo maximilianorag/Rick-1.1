@@ -8,7 +8,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Table2 from "./Paginator";
+import { RealFooter } from "./Paginator";
 
 const useStyles = makeStyles({
   table: {
@@ -16,18 +16,23 @@ const useStyles = makeStyles({
   }
 });
 
-function createData({ name, origin, image, status, location }) {
-  return { name, origin, image, status, location };
+function createData(name, id, IMG, status, location) {
+  return { name, id, IMG, status, location };
 }
 
 export function DataTable() {
   const dataFetch = CharactersData();
   console.log("dataFetch", dataFetch);
-  const rowi = dataFetch.map(PJ =>
-    createData(PJ.name, PJ.origin, PJ.status, PJ.location)
-  );
-  console.log("rowi", rowi);
+  // const rowi = dataFetch.map(PJ =>
+  //   createData(PJ.name, PJ.origin, PJ.status, PJ.location)
+  // );
+  // console.log("rowi", rowi);
   const classes = useStyles();
+
+  const columns = dataFetch
+    .map(d => createData(d.name, d.id, d.image, d.status, d.location))
+    .sort((a, b) => (a.id < b.id ? -1 : 1));
+  console.log("columns", columns);
   const imgStyle = {
     width: "100px",
     height: "100px"
@@ -52,14 +57,14 @@ export function DataTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataFetch.map(row => (
+            {columns.map(row => (
               <TableRow key={row.name}>
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.origin}</TableCell>
                 <TableCell align="right">
-                  <img src={row.image} style={imgStyle} />
+                  <img src={row.IMG} style={imgStyle} />
                 </TableCell>
                 <TableCell align="right">
                   {row.status === "Dead" ? (
@@ -74,7 +79,7 @@ export function DataTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Table2 />
+      <RealFooter />
     </>
   );
 }
