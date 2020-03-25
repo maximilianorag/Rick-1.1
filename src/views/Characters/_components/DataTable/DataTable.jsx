@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { CharactersData } from "../../../../core/ApiConsumer/CharactersData";
+///
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,56 +9,20 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TablePaginationActions } from "./Paginator";
-import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
+import { Paginator } from "../Paginator/Paginator";
 const DataParse = () => {
   debugger;
   const dataFetch = CharactersData();
 
-  function createData(name, id, IMG, status, location) {
-    return { name, id, IMG, status, location };
+  function createData(name, id, origin, IMG, status, location) {
+    return { name, id, origin, IMG, status, location };
   }
 
   const columns = dataFetch
-    .map(d => createData(d.name, d.id, d.image, d.status, d.location))
+    .map(d => createData(d.name, d.id, d.origin, d.image, d.status, d.location))
     .sort((a, b) => (a.id < b.id ? -1 : 1));
   return columns;
 };
-function RealFooter(props) {
-  const {
-    page,
-    rowsPerPage,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    tamaño
-  } = props;
-
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="custom pagination table">
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={tamaño}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
-                native: true
-              }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-  );
-}
 
 const useStyles = makeStyles({
   table: {
@@ -69,8 +34,8 @@ export function DataTable() {
   const columns = DataParse();
   const tamaño = columns.length;
   console.log("tamaño", tamaño);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, columns.length - page * rowsPerPage);
 
@@ -144,7 +109,7 @@ export function DataTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <RealFooter
+      <Paginator
         tamaño={tamaño}
         page={page}
         rowsPerPage={rowsPerPage}
