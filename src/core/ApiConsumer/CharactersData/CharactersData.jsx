@@ -3,14 +3,14 @@ import axios from "axios";
 export function CharactersData(pagina) {
   const [Data, setData] = useState([]);
   //  const [Page, setPage] = useState(1);
-  const Page = pagina;
+
   useEffect(() => {
     console.log("pagina", pagina);
 
     const response = async () => {
       try {
         const responsive = await axios(
-          ` https://rickandmortyapi.com/api/character/?page=${Page}`
+          ` https://rickandmortyapi.com/api/character/?page=${pagina}`
         );
 
         setData(responsive.data.results);
@@ -19,7 +19,7 @@ export function CharactersData(pagina) {
       }
     };
     response();
-  }, []);
+  }, [pagina]);
 
   // const Rick = class {
   //   constructor({ name, status, species }) {

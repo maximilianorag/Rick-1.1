@@ -1,7 +1,7 @@
 import React from "react";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
-import { TablePaginationActions } from './TablePaginationActions'
+import { TablePaginationActions } from "./TablePaginationActions";
 ///////////
 
 import Table from "@material-ui/core/Table";
@@ -10,6 +10,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 export function Paginator(props) {
   const {
+    url,
+    rowsPerPageOptions,
     page,
     rowsPerPage,
     handleChangePage,
@@ -23,7 +25,7 @@ export function Paginator(props) {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={rowsPerPageOptions}
               colSpan={3}
               count={tamaño}
               rowsPerPage={rowsPerPage}

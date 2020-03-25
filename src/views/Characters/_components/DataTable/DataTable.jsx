@@ -10,9 +10,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Paginator } from "../Paginator/Paginator";
-const DataParse = () => {
-  debugger;
-  const dataFetch = CharactersData();
+const DataParse = pagina => {
+  const dataFetch = CharactersData(pagina);
 
   function createData(name, id, origin, IMG, status, location) {
     return { name, id, origin, IMG, status, location };
@@ -31,7 +30,8 @@ const useStyles = makeStyles({
 });
 
 export function DataTable() {
-  const columns = DataParse();
+  const [url, seturl] = useState(2);
+  const columns = DataParse(url);
   const tamaño = columns.length;
   console.log("tamaño", tamaño);
   const [page, setPage] = useState(0);
@@ -108,8 +108,37 @@ export function DataTable() {
             )}
           </TableBody>
         </Table>
+        <button
+          onClick={() => {
+            seturl(1);
+          }}
+        >
+          1
+        </button>
+        <button
+          onClick={() => {
+            seturl(2);
+          }}
+        >
+          2
+        </button>
+        <button
+          onClick={() => {
+            seturl(3);
+          }}
+        >
+          3
+        </button>
+        <button
+          onClick={() => {
+            seturl(4);
+          }}
+        >
+          4
+        </button>
       </TableContainer>
       <Paginator
+        rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
         tamaño={tamaño}
         page={page}
         rowsPerPage={rowsPerPage}
