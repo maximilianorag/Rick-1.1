@@ -1,34 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { DataTable } from "./_components/DataTable";
 import "./Characters.css";
-import { Cards } from "./_components/Cards";
 import { CharactersData } from "../../core/ApiConsumer/CharactersData/";
+import { CardList } from "./_components/CardList/";
+import { Button } from "primereact/button";
+
+import { Layout } from "../_components/Layout/";
+
 export const Characters = () => {
   // console.log("CharactersData", CharactersData());
-  const [Page, setPage] = useState(1);
-
-  const dataFetch = CharactersData(Page);
-
-  const Cartas = () => {
-    return dataFetch.map((PJ, index) => {
-      return (
-        <div className="Cards" key={index}>
-          <Cards
-            name={PJ.name}
-            origin={PJ.origin}
-            image={PJ.image}
-            status={PJ.status}
-            location={PJ.location}
-          />
-        </div>
-      );
-    });
+  const initialState = {
+    isVisibleCards: true,
+    isVisibleTable: false
   };
 
+  const reducer = (state, { type, payload }) => {
+    switch (type) {
+      case "TOGLE_CARDS":
+        return { ...state, isVisibleCards: true, isVisibleTable: false };
+      case "TOGLE_TABLE":
+        return { ...state, isVisibleCards: false, isVisibleTable: true };
+
+      default:
+        return state;
+    }
+  };
+
+  const [visibleSectionState, visibleUSectionDispatch] = useReducer(
+    reducer,
+    initialState
+  );
+  console.log("visibleSectionState", visibleSectionState);
   return (
     <div className="back">
-      <Cartas />
-      <DataTable />
+      {visibleSectionState.isVisibleCards && <CardList />}
+      {visibleSectionState.isVisibleTable && <DataTable />}
+
+      <Button
+        label="Cards"
+        onClick={() => visibleUSectionDispatch({ type: "TOGLE_CARDS" })}
+      />
+
+      <Button
+        label="TableData"
+        onClick={() => visibleUSectionDispatch({ type: "TOGLE_TABLE" })}
+      />
     </div>
   );
 };

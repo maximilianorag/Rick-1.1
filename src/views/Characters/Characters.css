@@ -6,5 +6,5 @@
   margin-left: 5rem;
 }
 .back {
-  background-color: beige;
+  flex-grow: 1;
 }

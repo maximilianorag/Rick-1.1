@@ -6,7 +6,6 @@ import "./HomePage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import classNames from "classnames";
 const styles = {
-  margin: "100px 0px 0px 0px",
   border: "5px solid gray"
 };
 

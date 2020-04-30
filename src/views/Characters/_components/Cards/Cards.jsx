@@ -43,14 +43,19 @@ import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { useFourThreeCardMediaStyles } from "@mui-treasury/styles/cardMedia/fourThree";
 import { useN04TextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/n04";
 import { useOverShadowStyles } from "@mui-treasury/styles/shadow/over";
+import { Dialogs } from "../../../_components/Dialog";
+import Accordion from "react-bootstrap/Accordion";
+import Button from "react-bootstrap/Button";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 350,
-    height: 570,
+    maxWidth: 300,
+    minHeight: 600,
     margin: "auto",
+    backgroundColor: "beige",
     borderRadius: 12,
-    padding: 12
+    padding: 12,
+    position: "relative"
   },
   media: {
     borderRadius: 6
@@ -64,7 +69,7 @@ export const Cards = props => {
   const shadowStyles = useOverShadowStyles({ inactive: false });
 
   return (
-    <>
+    <React.Fragment>
       <Card className={cx(styles.root, shadowStyles.root)}>
         <CardMedia
           className={cx(styles.media, mediaStyles.root)}
@@ -79,6 +84,6 @@ export const Cards = props => {
           />
         </CardContent>
       </Card>
-    </>
+    </React.Fragment>
   );
 };

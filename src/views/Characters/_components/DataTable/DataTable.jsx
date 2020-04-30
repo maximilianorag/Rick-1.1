@@ -142,6 +142,7 @@ export function DataTable() {
         tamaño={tamaño}
         page={page}
         rowsPerPage={rowsPerPage}
+        rowsPerPage={rowsPerPage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
         handleChangePage={handleChangePage}
       />

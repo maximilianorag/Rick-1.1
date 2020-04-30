@@ -24,6 +24,13 @@ export function Paginator(props) {
       <Table aria-label="custom pagination table">
         <TableFooter>
           <TableRow>
+            <select id="cars">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="opel">Opel</option>
+              <option value="audi">Audi</option>
+            </select>
+            <button style={{ marginTop: 10 }}>12345</button>
             <TablePagination
               rowsPerPageOptions={rowsPerPageOptions}
               colSpan={3}
